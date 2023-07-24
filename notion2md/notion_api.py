@@ -4,22 +4,21 @@ from notion_client import Client
 
 from notion2md.exceptions import MissingTokenError
 
-
 def singleton(cls):
     instance = {}
 
-    def get_instance():
+    def get_instance(*args, **kwargs):
         if cls not in instance:
-            instance[cls] = cls()
+            instance[cls] = cls(*args, **kwargs)
         return instance[cls]
 
     return get_instance
 
-
 @singleton
 class NotionClient:
-    def __init__(self):
-        token = self._get_env_variable()
+    def __init__(self, token=None):
+        if token is None:
+            token = self._get_env_variable()
         self._client = Client(auth=token)
 
     def _get_env_variable(self):

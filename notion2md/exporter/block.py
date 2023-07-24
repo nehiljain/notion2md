@@ -10,6 +10,7 @@ from notion2md.util import zip_dir
 class Exporter:
     def __init__(
         self,
+        notion_token: str = None,
         block_id: str = None,
         block_url: str = None,
         output_filename: str = None,
@@ -25,7 +26,7 @@ class Exporter:
             download=download,
             unzipped=unzipped,
         )
-        self._client = NotionClient()
+        self._client = NotionClient(token=notion_token)
         self._io = None
         self._block_convertor = None
 
